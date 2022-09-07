@@ -1,11 +1,9 @@
-from email import iterators
 import pandas as pd
 from tabulate import tabulate
 import numpy as np
 import csv
 import random as rd
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
 import networkx as nx
 from networkx.algorithms.centrality.eigenvector import eigenvector_centrality
 from networkx.algorithms.centrality.betweenness import betweenness_centrality
