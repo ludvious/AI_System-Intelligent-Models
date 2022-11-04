@@ -7,8 +7,8 @@ from tabulate import tabulate
 
 class Sir:
 
-  def __init__(self, init_infect, filename, delimiter): #init infect = numero int di nodi infetti
-    df = pd.read_csv('/content/'+filename, delimiter) #delimiter di default = ','
+  def __init__(self, init_infect, filename, delimiter): 
+    df = pd.read_csv('/content/'+filename, delimiter) #default delimiter = ','
     self.graph = nx.from_pandas_edgelist(df, source='from', target='to')
     self.init_infect = init_infect
     self.init_state = self.set_init_infect()
@@ -16,16 +16,16 @@ class Sir:
   def set_init_infect(self):
     #get graph nodes
     nodes = self.graph.nodes
-    sample = rd.sample(nodes, self.init_infect) #assegno tot nodi casuali come infetti
+    sample = rd.sample(nodes, self.init_infect) #assign random nodes as infected
     
-    #set parametri iniziali: infetti iniziali
+    #set initial parameters
     for node in nodes:   
       #set initial infected
       if node in sample:
         nodes[node]['State'] = 'I'
         nodes[node]['T_rec'] = 0
         nodes[node]['T_sus'] = 0
-        nodes[node]['DNA'] = [node]
+        nodes[node]['DNA'] = [node] #save origin infected node
         nodes[node]['INIT'] = True
       else:
         nodes[node]['State'] = 'S'
@@ -135,9 +135,9 @@ class Sir:
             G.nodes[n]['State'] = 'I'
             G.nodes[n]['T_rec'] = 0
             G.nodes[n]['T_sus'] = 0
-            G.nodes[n]['DNA'].append(i)
+            G.nodes[n]['DNA'].append(i) #save the node that infected the susceptible neighbor
 
-      #guarigione
+      #recovering
       for j in infected:
         if G.nodes[j]['T_rec'] >= t_rec:
           G.nodes[j]['State'] = 'R'
@@ -146,7 +146,7 @@ class Sir:
         else:
           G.nodes[j]['T_rec'] += 1
     
-      #ritornare ad essere suscettibili
+      #back to susceptible state
       for r in recovered:
         if G.nodes[r]['T_sus'] >= t_sus:
           G.nodes[r]['State'] = 'S'
@@ -187,13 +187,13 @@ class Sir:
     recovered = self.getRecovered()
 
     for s in susceptible:
-      color_map.append('#abcdef') # colore celeste
+      color_map.append('#abcdef') # color light blue
 
     for i in infected:
-      color_map.append('#ff5349') #colore rosso
+      color_map.append('#ff5349') #color red
     
     for r in recovered:
-      color_map.append('#98ff98') #colore verde
+      color_map.append('#98ff98') #color green
     
     plt.figure(figsize=(12,6))
     #pos = nx.spring_layout(g, iterations = 15, seed=1721)
