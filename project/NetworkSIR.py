@@ -13,6 +13,12 @@ class Sir:
     self.init_infect = init_infect
     self.init_state = self.set_init_infect()
   
+  def getNetwork(filename, delimiter):
+    df = pd.read_csv('/content/'+filename, delimiter) #delimiter di default = ','
+    graph = nx.from_pandas_edgelist(df, source='from', target='to')
+    
+    return graph
+  
   def set_init_infect(self):
     #get graph nodes
     nodes = self.graph.nodes

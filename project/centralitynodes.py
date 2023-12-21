@@ -14,12 +14,6 @@ from networkx.algorithms.centrality.betweenness import betweenness_centrality
 from networkx.algorithms.centrality.degree_alg import degree_centrality
 from networkx.algorithms.bipartite.centrality import closeness_centrality
 
-def getNetwork(filename, delimiter):
-    df = pd.read_csv('/content/'+filename, delimiter) #delimiter di default = ','
-    graph = nx.from_pandas_edgelist(df, source='from', target='to')
-    
-    return graph
-
 def centrality_metrics(graph):
     dc = nx.degree_centrality(graph)
     cc = nx.closeness_centrality(graph)
