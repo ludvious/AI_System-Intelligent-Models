@@ -50,6 +50,7 @@ class Sir:
     return [n for n in self.graph.neighbors(node)]
 
   def getNeighbors_Susceptibile(self, node):
+    
     neigh_susceptible = []
     for n in self.graph.neighbors(node):
         if self.graph.nodes[n]['State'] == 'S':
@@ -58,6 +59,7 @@ class Sir:
     return neigh_susceptible
 
   def getSusceptible(self):
+    
     susceptible = []
     for n in self.graph.nodes:
         if self.graph.nodes[n]['State'] == 'S':
@@ -66,6 +68,7 @@ class Sir:
     return susceptible
 
   def getInfected(self):
+    
     infected = []
     for n in self.graph.nodes:
         if self.graph.nodes[n]['State'] == 'I':
@@ -74,6 +77,7 @@ class Sir:
     return infected
   
   def getRecovered(self):
+    
     recovered = []
     for n in self.graph.nodes:
         if self.graph.nodes[n]['State'] == 'R':
@@ -82,7 +86,9 @@ class Sir:
     return recovered
   
   def whoInfects(self, node):
+    
     infects = []
+    
     for n in self.graph.nodes:
       for nd in self.graph.nodes[n]['DNA']:
         if nd == node:
@@ -92,11 +98,10 @@ class Sir:
   
   def spread_count(self): #to start after a simulation
     
-    nodes = self.graph.nodes
     nodes_count = {}
     
-    for n in nodes:
-      for node in nodes[n]['DNA']:
+    for n in self.graph.nodes:
+      for node in self.graph.nodes[n]['DNA']:
         if node in nodes_count:
           nodes_count[node] += 1
         else:
